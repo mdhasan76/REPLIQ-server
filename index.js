@@ -27,7 +27,6 @@ const verifyjwt = (req, res, next) => {
             return res.status(403).send({ message: "Forbiden access" })
         }
         req.decoded = decoded;
-        // console.log('supply decoded', req.decoded)
         next()
     })
 }
@@ -49,7 +48,7 @@ const run = async () => {
         const query = { email: userMail };
         const user = await users.findOne(query);
         if (user) {
-            const token = jwt.sign({ userMail }, process.env.USER_JWT, { expiresIn: '24h' });
+            const token = jwt.sign({ userMail }, process.env.USER_JWT, { expiresIn: '1h' });
             return res.send({ accessToken: token })
         }
         res.status(403).send({ accessToken: "" })
